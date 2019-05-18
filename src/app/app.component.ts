@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 
 const SIZE = 50;
 const SEA_LAND_RATIO = 40;
@@ -11,6 +11,11 @@ enum AreaStatus {
 
 const SEA_COLOR = '#cbe1ff';
 const LAND_COLOR = '#bbbbbb';
+function ISLAND_COLOR()
+{
+  let r = function () { return Math.floor(Math.random()*256) };
+  return "rgb(" + r() + "," + r() + "," + r() + ")";
+};
 
 @Component({
   selector: 'app-root',
@@ -49,13 +54,17 @@ export class AppComponent implements OnInit {
 
   public onColorChanged(event: Event) {
     // Write your code below.
+
   }
 
   private getInitialColor(value: number): string {
     if (value === AreaStatus.Land) {
       return LAND_COLOR;
+    } else if (value == AreaStatus.Sea) {
+      return SEA_COLOR;
+    } else {
+      return ISLAND_COLOR();
     }
-    return SEA_COLOR;
   }
 
   private setValueAt(row: number, column: number, value: number) {
@@ -143,5 +152,42 @@ export class AppComponent implements OnInit {
    */
   private findIslands() {
     // Write your code below.
+
+
+    let landArea;
+    let island;
+    //Make use of AreaStatus Discovered
+    //Make use of private position?
+    //Setting new color for each island using random color.
+    for (let col = 0; col < SIZE; col++) {
+      for (let row = 0; row < SIZE; row++) {
+        let top = this.getValueAt(row+1,col);
+        let bottom = this.getValueAt(row-1,col);
+        let right = this.getValueAt(row,col+1);
+        let left = this.getValueAt(row,col-1);
+        landArea = this.getValueAt(row,col);
+
+
+        if(landArea == AreaStatus.Land){
+
+
+
+
+          this.setValueAt(row,col,AreaStatus.Discovered);
+
+          this.setIslandColor(row,col,ISLAND_COLOR());
+
+
+
+
+
+        }
+
+
+      }
+
+
+    }
+
   }
 }
