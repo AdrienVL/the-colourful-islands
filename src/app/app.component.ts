@@ -11,9 +11,11 @@ enum AreaStatus {
 
 const SEA_COLOR = '#cbe1ff';
 const LAND_COLOR = '#bbbbbb';
-function ISLAND_COLOR()
-{
-  let r = function () { return Math.floor(Math.random()*256) };
+
+function ISLAND_COLOR() {
+  let r = function () {
+    return Math.floor(Math.random() * 256)
+  };
   return "rgb(" + r() + "," + r() + "," + r() + ")";
 };
 
@@ -150,36 +152,126 @@ export class AppComponent implements OnInit {
    * discover islands and apply a new color to each of them.
    * the definition of an Island is : All LAND square that connect to an other LAND square
    */
+
   private findIslands() {
     // Write your code below.
 
 
-    let landArea;
+    let randomColor = [];
+
+    for (let i = 0; i < 1000; i++) {
+
+      randomColor.push(ISLAND_COLOR());
+
+    }
+
+
     let island;
+    let counter=0;
+
     //Make use of AreaStatus Discovered
     //Make use of private position?
     //Setting new color for each island using random color.
     for (let col = 0; col < SIZE; col++) {
       for (let row = 0; row < SIZE; row++) {
-        let top = this.getValueAt(row+1,col);
-        let bottom = this.getValueAt(row-1,col);
-        let right = this.getValueAt(row,col+1);
-        let left = this.getValueAt(row,col-1);
-        landArea = this.getValueAt(row,col);
+        let top = this.getValueAt(row + 1, col);
+        let topRight = this.getValueAt(row+1,col+1);
+        let topLeft = this.getValueAt(row+1,col-1);
+        let bottom = this.getValueAt(row - 1, col);
+        let bottomRight = this.getValueAt(row - 1, col + 1);
+        let bottomLeft = this.getValueAt(row-1,col-1);
+        let right = this.getValueAt(row, col + 1);
+        let left = this.getValueAt(row, col - 1);
+        let landArea = this.getValueAt(row, col);
 
 
         if(landArea == AreaStatus.Land){
+          counter++;
+          console.log(counter);
+        }
+
+        if (landArea == AreaStatus.Land || landArea == AreaStatus.Discovered) {
 
 
 
+          this.setIslandColor(row,col,randomColor[counter]);
+          this.setValueAt(row, col, AreaStatus.Discovered);
 
-          this.setValueAt(row,col,AreaStatus.Discovered);
+          if(top == AreaStatus.Discovered){
+            let islandColor = this.getIslandColor(row + 1, col);
+            this.setIslandColor(row, col, islandColor);
+          } else
 
-          this.setIslandColor(row,col,ISLAND_COLOR());
+          if(bottom == AreaStatus.Discovered){
+            let islandColor = this.getIslandColor(row -1, col);
+            this.setIslandColor(row, col, islandColor);
+          } else
 
+          if(right == AreaStatus.Discovered){
+            let islandColor = this.getIslandColor(row, col+1);
+            this.setIslandColor(row, col, islandColor);
+          } else
 
+          if(left == AreaStatus.Discovered){
+            let islandColor = this.getIslandColor(row, col-1);
+            this.setIslandColor(row, col, islandColor);
+          } else
 
+          if(topRight == AreaStatus.Discovered){
+            let islandColor = this.getIslandColor(row + 1, col+1);
+            this.setIslandColor(row, col, islandColor);
+          } else
 
+          if(topLeft == AreaStatus.Discovered){
+            let islandColor = this.getIslandColor(row + 1, col-1);
+            this.setIslandColor(row, col, islandColor);
+          }else
+
+          if(bottomRight == AreaStatus.Discovered){
+            let islandColor = this.getIslandColor(row - 1, col+1);
+            this.setIslandColor(row, col, islandColor);
+          } else
+
+          if(bottomLeft == AreaStatus.Discovered){
+            let islandColor = this.getIslandColor(row -1, col-1);
+            this.setIslandColor(row, col, islandColor);
+          } else
+
+          if (top == AreaStatus.Land) {
+
+            this.setValueAt(row + 1, col, AreaStatus.Discovered);
+
+          } else
+          if (bottom == AreaStatus.Land) {
+
+            this.setValueAt(row - 1, col, AreaStatus.Discovered);
+
+          } else
+          if (right == AreaStatus.Land) {
+            this.setValueAt(row, col + 1, AreaStatus.Discovered);
+
+          } else
+          if (left == AreaStatus.Land) {
+            this.setValueAt(row, col - 1, AreaStatus.Discovered);
+          } else
+
+          if (topRight == AreaStatus.Land) {
+
+            this.setValueAt(row + 1, col+1, AreaStatus.Discovered);
+
+          }else
+          if (topLeft == AreaStatus.Land) {
+
+            this.setValueAt(row + 1, col-1, AreaStatus.Discovered);
+
+          }else
+          if (bottomRight == AreaStatus.Land) {
+            this.setValueAt(row-1, col + 1, AreaStatus.Discovered);
+
+          }else
+          if (bottomLeft == AreaStatus.Land) {
+            this.setValueAt(row-1, col - 1, AreaStatus.Discovered);
+          }
 
         }
 
