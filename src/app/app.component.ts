@@ -146,6 +146,9 @@ export class AppComponent implements OnInit {
    */
   private attachEventListeners() {
     // Write your code below.
+
+    // this.elementRef.nativeElement.querySelector('my-element')
+    //   .addEventListener('click', this.onClick.bind(this));
   }
 
   /**
@@ -200,44 +203,54 @@ export class AppComponent implements OnInit {
           if(top == AreaStatus.Discovered){
             let islandColor = this.getIslandColor(row + 1, col);
             this.setIslandColor(row, col, islandColor);
+            counter--;
           } else
 
           if(bottom == AreaStatus.Discovered){
             let islandColor = this.getIslandColor(row -1, col);
             this.setIslandColor(row, col, islandColor);
+            counter--;
           } else
 
           if(right == AreaStatus.Discovered){
             let islandColor = this.getIslandColor(row, col+1);
             this.setIslandColor(row, col, islandColor);
+            counter--;
           } else
 
           if(left == AreaStatus.Discovered){
             let islandColor = this.getIslandColor(row, col-1);
             this.setIslandColor(row, col, islandColor);
+            counter--;
           } else
 
           if(topRight == AreaStatus.Discovered){
             let islandColor = this.getIslandColor(row + 1, col+1);
             this.setIslandColor(row, col, islandColor);
+            counter--;
           } else
 
           if(topLeft == AreaStatus.Discovered){
             let islandColor = this.getIslandColor(row + 1, col-1);
             this.setIslandColor(row, col, islandColor);
+            counter--;
           }else
 
           if(bottomRight == AreaStatus.Discovered){
             let islandColor = this.getIslandColor(row - 1, col+1);
             this.setIslandColor(row, col, islandColor);
+            counter--;
           } else
 
           if(bottomLeft == AreaStatus.Discovered){
             let islandColor = this.getIslandColor(row -1, col-1);
             this.setIslandColor(row, col, islandColor);
-          } else
+            counter--;
+          }
+          else
 
           if (top == AreaStatus.Land) {
+
 
             this.setValueAt(row + 1, col, AreaStatus.Discovered);
 
@@ -280,6 +293,8 @@ export class AppComponent implements OnInit {
 
 
     }
+
+    this.numberOfIslands = counter;
 
   }
 }
